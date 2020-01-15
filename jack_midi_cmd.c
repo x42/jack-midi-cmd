@@ -239,10 +239,10 @@ static int parse_message(const char *msg) {
 	else if (2 == sscanf(msg, "n %i %i\n", &param[0], &param[1])) {
 		THREEBYTES(0x80, param[0], param[1])
 	}
-	else if (2 == sscanf(msg, "2 %i\n", &param[0])) {
+	else if (2 == sscanf(msg, "2 %i %i\n", &param[0], &param[1])) {
 		event.size = 2;
 		event.buffer[0] =  param[0] & 0xff;
-		event.buffer[1] =  param[1] & 0xff;
+		event.buffer[1] =  param[1] & 0x7f;
 		queue_event(&event);
 	}
 	else if (1 == sscanf(msg, "1 %i\n", &param[0])) {
@@ -326,4 +326,3 @@ out:
 	cleanup(0);
 	return(0);
 }
-/* vi:set ts=2 sts=2 sw=2: */
